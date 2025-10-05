@@ -128,6 +128,40 @@ router.get('/', optionalAuth, async (req, res, next) => {
   }
 });
 
+// @desc    Get property categories
+// @route   GET /api/properties/categories
+// @access  Public
+router.get('/categories', async (req, res, next) => {
+  try {
+    const categories = await PropertyCategory.find({ isActive: true })
+      .sort({ sortOrder: 1, name: 1 });
+
+    res.status(200).json({
+      success: true,
+      data: categories
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc    Get amenities
+// @route   GET /api/properties/amenities
+// @access  Public
+router.get('/amenities', async (req, res, next) => {
+  try {
+    const amenities = await Amenity.find({ isActive: true })
+      .sort({ category: 1, name: 1 });
+
+    res.status(200).json({
+      success: true,
+      data: amenities
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 // @desc    Get property by ID
 // @route   GET /api/properties/:id
 // @access  Public
@@ -289,40 +323,6 @@ router.delete('/:id', protect, async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: 'Property deleted successfully'
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
-// @desc    Get property categories
-// @route   GET /api/properties/categories
-// @access  Public
-router.get('/categories', async (req, res, next) => {
-  try {
-    const categories = await PropertyCategory.find({ isActive: true })
-      .sort({ sortOrder: 1, name: 1 });
-
-    res.status(200).json({
-      success: true,
-      data: categories
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
-// @desc    Get amenities
-// @route   GET /api/properties/amenities
-// @access  Public
-router.get('/amenities', async (req, res, next) => {
-  try {
-    const amenities = await Amenity.find({ isActive: true })
-      .sort({ category: 1, sortOrder: 1, name: 1 });
-
-    res.status(200).json({
-      success: true,
-      data: amenities
     });
   } catch (error) {
     next(error);

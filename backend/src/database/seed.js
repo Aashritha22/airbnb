@@ -107,7 +107,16 @@ const sampleAdminUsers = [
     phone: '+1 (555) 000-0001',
     role: 'super_admin',
     department: 'IT',
-    permissions: ['all'],
+    permissions: [
+      'users:read', 'users:write', 'users:delete',
+      'properties:read', 'properties:write', 'properties:delete', 'properties:verify',
+      'bookings:read', 'bookings:write', 'bookings:cancel',
+      'payments:read', 'payments:refund',
+      'analytics:read', 'analytics:export',
+      'admin_users:read', 'admin_users:write', 'admin_users:delete',
+      'support_tickets:read', 'support_tickets:write', 'support_tickets:close',
+      'system_settings:read', 'system_settings:write'
+    ],
     twoFactorEnabled: false
   },
   {
@@ -351,13 +360,23 @@ const seedDatabase = async () => {
     // Create reviews
     console.log('⭐ Creating reviews...');
     const reviews = [];
+    const reviewedBookings = new Set();
     
-    for (let i = 0; i < 100; i++) {
-      const booking = bookings[Math.floor(Math.random() * bookings.length)];
+    // Get checked-out bookings
+    const checkedOutBookings = bookings.filter(booking => booking.status === 'checked-out');
+    
+    for (let i = 0; i < Math.min(50, checkedOutBookings.length); i++) {
+      const booking = checkedOutBookings[Math.floor(Math.random() * checkedOutBookings.length)];
+      
+      // Skip if this booking already has a review
+      if (reviewedBookings.has(booking._id.toString())) {
+        continue;
+      }
+      
       const user = await User.findById(booking.user);
       const property = await Property.findById(booking.property);
       
-      if (booking.status === 'checked-out') {
+      try {
         const review = await Review.create({
           property: property._id,
           booking: booking._id,
@@ -379,6 +398,10 @@ const seedDatabase = async () => {
         });
         
         reviews.push(review);
+        reviewedBookings.add(booking._id.toString());
+      } catch (error) {
+        // Skip if review already exists
+        continue;
       }
     }
     
