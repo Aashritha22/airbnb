@@ -681,60 +681,72 @@ class _AdminUsersScreenState extends State<AdminUsersScreen> {
               ),
             ],
           ),
-          Text(
-            admin.email,
-            overflow: TextOverflow.ellipsis,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: _getRoleColor(admin.role).withOpacity(0.1),
-              borderRadius: BorderRadius.circular(6),
-            ),
+          Expanded(
             child: Text(
-              admin.roleText,
-              style: TextStyle(
-                color: _getRoleColor(admin.role),
-                fontWeight: FontWeight.w500,
+              admin.email,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: _getRoleColor(admin.role).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(6),
               ),
-            ),
-          ),
-          Text(
-            admin.department ?? 'N/A',
-            overflow: TextOverflow.ellipsis,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: _getStatusColor(admin.status).withOpacity(0.1),
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Text(
-              admin.statusText,
-              style: TextStyle(
-                color: _getStatusColor(admin.status),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                DateFormat('MMM dd, yyyy').format(admin.lastLoginAt),
+              child: Text(
+                admin.roleText,
+                style: TextStyle(
+                  color: _getRoleColor(admin.role),
+                  fontWeight: FontWeight.w500,
+                ),
                 overflow: TextOverflow.ellipsis,
               ),
-              if (admin.lastLoginIp != null)
+            ),
+          ),
+          Expanded(
+            child: Text(
+              admin.department ?? 'N/A',
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: _getStatusColor(admin.status).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                admin.statusText,
+                style: TextStyle(
+                  color: _getStatusColor(admin.status),
+                  fontWeight: FontWeight.w500,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                  admin.lastLoginIp!,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
-                    fontFamily: 'monospace',
-                  ),
+                  DateFormat('MMM dd, yyyy').format(admin.lastLoginAt),
                   overflow: TextOverflow.ellipsis,
                 ),
-            ],
+                if (admin.lastLoginIp != null)
+                  Text(
+                    admin.lastLoginIp!,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey.shade600,
+                      fontFamily: 'monospace',
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+              ],
+            ),
           ),
           Icon(
             admin.twoFactorEnabled ? Icons.check_circle : Icons.cancel,

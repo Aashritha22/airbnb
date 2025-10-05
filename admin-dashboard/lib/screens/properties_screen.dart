@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../widgets/admin_card.dart';
 import '../widgets/admin_table.dart';
+import '../widgets/responsive_layout.dart';
 import '../models/property.dart';
 import '../models/property_category.dart';
 
@@ -134,72 +135,143 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Properties Management',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+          ResponsiveLayout(
+            mobile: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Properties Management',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
                 ),
-              ),
-              ElevatedButton.icon(
-                onPressed: () {
-                  // Handle add property
-                },
-                icon: const Icon(Icons.add),
-                label: const Text('Add Property'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFE31C5F),
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      // Handle add property
+                    },
+                    icon: const Icon(Icons.add),
+                    label: const Text('Add Property'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFE31C5F),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            desktop: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Expanded(
+                  child: Text(
+                    'Properties Management',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Handle add property
+                  },
+                  icon: const Icon(Icons.add),
+                  label: const Text('Add Property'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFE31C5F),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  ),
+                ),
+              ],
+            ),
           ),
           
           const SizedBox(height: 24),
           
           // Stats Cards
-          GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 4,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 1.8,
-            children: [
-              AdminCard(
-                title: 'Total Properties',
-                value: propertyStats.totalProperties.toString(),
-                icon: Icons.home,
-                color: Colors.blue,
-                subtitle: 'Active: ${propertyStats.activeProperties}',
-              ),
-              AdminCard(
-                title: 'Verified Properties',
-                value: propertyStats.verifiedProperties.toString(),
-                icon: Icons.verified,
-                color: Colors.green,
-                subtitle: '${((propertyStats.verifiedProperties / propertyStats.totalProperties) * 100).toStringAsFixed(1)}% of total',
-              ),
-              AdminCard(
-                title: 'Average Rating',
-                value: propertyStats.averageRating.toString(),
-                icon: Icons.star,
-                color: Colors.orange,
-                subtitle: 'Based on all reviews',
-              ),
-              AdminCard(
-                title: 'Total Revenue',
-                value: NumberFormat.currency(symbol: '\$').format(propertyStats.totalRevenue),
-                icon: Icons.attach_money,
-                color: Colors.purple,
-                subtitle: 'Avg: ${NumberFormat.currency(symbol: '\$').format(propertyStats.averagePrice)}/night',
-              ),
-            ],
+          ResponsiveLayout(
+            mobile: Column(
+              children: [
+                AdminCard(
+                  title: 'Total Properties',
+                  value: propertyStats.totalProperties.toString(),
+                  icon: Icons.home,
+                  color: Colors.blue,
+                  subtitle: 'Active: ${propertyStats.activeProperties}',
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Verified Properties',
+                  value: propertyStats.verifiedProperties.toString(),
+                  icon: Icons.verified,
+                  color: Colors.green,
+                  subtitle: '${((propertyStats.verifiedProperties / propertyStats.totalProperties) * 100).toStringAsFixed(1)}% of total',
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Average Rating',
+                  value: propertyStats.averageRating.toString(),
+                  icon: Icons.star,
+                  color: Colors.orange,
+                  subtitle: 'Based on all reviews',
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Total Revenue',
+                  value: NumberFormat.currency(symbol: '\$').format(propertyStats.totalRevenue),
+                  icon: Icons.attach_money,
+                  color: Colors.purple,
+                  subtitle: 'Avg: ${NumberFormat.currency(symbol: '\$').format(propertyStats.averagePrice)}/night',
+                ),
+              ],
+            ),
+            desktop: GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 4,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: 1.8,
+              children: [
+                AdminCard(
+                  title: 'Total Properties',
+                  value: propertyStats.totalProperties.toString(),
+                  icon: Icons.home,
+                  color: Colors.blue,
+                  subtitle: 'Active: ${propertyStats.activeProperties}',
+                ),
+                AdminCard(
+                  title: 'Verified Properties',
+                  value: propertyStats.verifiedProperties.toString(),
+                  icon: Icons.verified,
+                  color: Colors.green,
+                  subtitle: '${((propertyStats.verifiedProperties / propertyStats.totalProperties) * 100).toStringAsFixed(1)}% of total',
+                ),
+                AdminCard(
+                  title: 'Average Rating',
+                  value: propertyStats.averageRating.toString(),
+                  icon: Icons.star,
+                  color: Colors.orange,
+                  subtitle: 'Based on all reviews',
+                ),
+                AdminCard(
+                  title: 'Total Revenue',
+                  value: NumberFormat.currency(symbol: '\$').format(propertyStats.totalRevenue),
+                  icon: Icons.attach_money,
+                  color: Colors.purple,
+                  subtitle: 'Avg: ${NumberFormat.currency(symbol: '\$').format(propertyStats.averagePrice)}/night',
+                ),
+              ],
+            ),
           ),
           
           const SizedBox(height: 24),
@@ -303,11 +375,14 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                                   style: const TextStyle(fontSize: 12),
                                 ),
                                 const SizedBox(width: 4),
-                                Text(
-                                  property.category.name,
-                                  style: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontSize: 12,
+                                Expanded(
+                                  child: Text(
+                                    property.category.name,
+                                    style: TextStyle(
+                                      color: Colors.grey.shade600,
+                                      fontSize: 12,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ],
@@ -350,15 +425,11 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
                     children: [
                       const Icon(Icons.star, size: 16, color: Colors.amber),
                       const SizedBox(width: 4),
-                      Text(
-                        property.rating.toString(),
-                        style: const TextStyle(fontSize: 14),
-                      ),
-                      Text(
-                        ' (${property.totalReviews})',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey.shade600,
+                      Expanded(
+                        child: Text(
+                          '${property.rating} (${property.totalReviews})',
+                          style: const TextStyle(fontSize: 14),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],

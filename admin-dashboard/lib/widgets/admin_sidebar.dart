@@ -171,12 +171,7 @@ class AdminSidebar extends StatelessWidget {
                                   Text(
                                     'Admin Panel',
                                     style: TextStyle(
-                                      fontSize: Responsive.getResponsiveValue(
-                                        context,
-                                        mobile: 16.0,
-                                        tablet: 18.0,
-                                        desktop: 20.0,
-                                      ),
+                                      fontSize: 18.0,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
@@ -184,12 +179,7 @@ class AdminSidebar extends StatelessWidget {
                                   Text(
                                     'Airbnb Clone',
                                     style: TextStyle(
-                                      fontSize: Responsive.getResponsiveValue(
-                                        context,
-                                        mobile: 10.0,
-                                        tablet: 11.0,
-                                        desktop: 12.0,
-                                      ),
+                                      fontSize: 12.0,
                                       color: Colors.white70,
                                     ),
                                   ),

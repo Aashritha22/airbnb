@@ -108,17 +108,20 @@ class _UsersScreenState extends State<UsersScreen> {
             desktop: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Users Management',
-                  style: TextStyle(
-                    fontSize: Responsive.getResponsiveValue(
-                      context,
-                      mobile: 20.0,
-                      tablet: 24.0,
-                      desktop: 28.0,
+                Expanded(
+                  child: Text(
+                    'Users Management',
+                    style: TextStyle(
+                      fontSize: Responsive.getResponsiveValue(
+                        context,
+                        mobile: 20.0,
+                        tablet: 24.0,
+                        desktop: 28.0,
+                      ),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
                     ),
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 ElevatedButton.icon(

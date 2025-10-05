@@ -38,7 +38,7 @@ class AdminTable extends StatelessWidget {
               child: Row(
                 children: headers.map((header) {
                   return SizedBox(
-                    width: 120, // Fixed width for each column
+                    width: 160, // Fixed width for each column
                     child: Text(
                       header,
                       style: const TextStyle(
@@ -81,7 +81,7 @@ class AdminTable extends StatelessWidget {
                     child: Row(
                       children: row.map((cell) {
                         return SizedBox(
-                          width: 120, // Fixed width for each column
+                          width: 160, // Fixed width for each column
                           child: cell,
                         );
                       }).toList(),

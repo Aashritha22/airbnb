@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
+import '../utils/responsive.dart';
 import 'admin_dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -106,8 +107,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Login Form
                 Container(
                   width: double.infinity,
-                  constraints: const BoxConstraints(maxWidth: 400),
-                  padding: const EdgeInsets.all(32),
+                  constraints: BoxConstraints(
+                    maxWidth: Responsive.getResponsiveValue(
+                      context,
+                      mobile: 350.0,
+                      tablet: 400.0,
+                      desktop: 400.0,
+                    ),
+                  ),
+                  padding: Responsive.getResponsiveEdgeInsets(context),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),

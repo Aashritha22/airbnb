@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../widgets/admin_card.dart';
 import '../widgets/admin_table.dart';
+import '../widgets/responsive_layout.dart';
 import '../models/booking.dart';
 
 class BookingsScreen extends StatefulWidget {
@@ -133,72 +134,143 @@ class _BookingsScreenState extends State<BookingsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Bookings Management',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+          ResponsiveLayout(
+            mobile: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Bookings Management',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
                 ),
-              ),
-              ElevatedButton.icon(
-                onPressed: () {
-                  // Handle add booking
-                },
-                icon: const Icon(Icons.add),
-                label: const Text('Add Booking'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFE31C5F),
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      // Handle add booking
+                    },
+                    icon: const Icon(Icons.add),
+                    label: const Text('Add Booking'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFE31C5F),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            desktop: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Expanded(
+                  child: Text(
+                    'Bookings Management',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Handle add booking
+                  },
+                  icon: const Icon(Icons.add),
+                  label: const Text('Add Booking'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFE31C5F),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  ),
+                ),
+              ],
+            ),
           ),
           
           const SizedBox(height: 24),
           
           // Stats Cards
-          GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 4,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 1.8,
-            children: [
-              AdminCard(
-                title: 'Total Bookings',
-                value: bookingStats.totalBookings.toString(),
-                icon: Icons.book_online,
-                color: Colors.blue,
-                subtitle: 'Confirmed: ${bookingStats.confirmedBookings}',
-              ),
-              AdminCard(
-                title: 'Pending Bookings',
-                value: bookingStats.pendingBookings.toString(),
-                icon: Icons.schedule,
-                color: Colors.orange,
-                subtitle: 'Awaiting confirmation',
-              ),
-              AdminCard(
-                title: 'Total Revenue',
-                value: NumberFormat.currency(symbol: '\$').format(bookingStats.totalRevenue),
-                icon: Icons.attach_money,
-                color: Colors.green,
-                subtitle: 'Avg: ${NumberFormat.currency(symbol: '\$').format(bookingStats.averageBookingValue)}',
-              ),
-              AdminCard(
-                title: 'Occupancy Rate',
-                value: '${bookingStats.occupancyRate.toStringAsFixed(1)}%',
-                icon: Icons.trending_up,
-                color: Colors.purple,
-                subtitle: 'Current month',
-              ),
-            ],
+          ResponsiveLayout(
+            mobile: Column(
+              children: [
+                AdminCard(
+                  title: 'Total Bookings',
+                  value: bookingStats.totalBookings.toString(),
+                  icon: Icons.book_online,
+                  color: Colors.blue,
+                  subtitle: 'Confirmed: ${bookingStats.confirmedBookings}',
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Pending Bookings',
+                  value: bookingStats.pendingBookings.toString(),
+                  icon: Icons.schedule,
+                  color: Colors.orange,
+                  subtitle: 'Awaiting confirmation',
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Total Revenue',
+                  value: NumberFormat.currency(symbol: '\$').format(bookingStats.totalRevenue),
+                  icon: Icons.attach_money,
+                  color: Colors.green,
+                  subtitle: 'Avg: ${NumberFormat.currency(symbol: '\$').format(bookingStats.averageBookingValue)}',
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Occupancy Rate',
+                  value: '${bookingStats.occupancyRate.toStringAsFixed(1)}%',
+                  icon: Icons.trending_up,
+                  color: Colors.purple,
+                  subtitle: 'Current month',
+                ),
+              ],
+            ),
+            desktop: GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 4,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: 1.8,
+              children: [
+                AdminCard(
+                  title: 'Total Bookings',
+                  value: bookingStats.totalBookings.toString(),
+                  icon: Icons.book_online,
+                  color: Colors.blue,
+                  subtitle: 'Confirmed: ${bookingStats.confirmedBookings}',
+                ),
+                AdminCard(
+                  title: 'Pending Bookings',
+                  value: bookingStats.pendingBookings.toString(),
+                  icon: Icons.schedule,
+                  color: Colors.orange,
+                  subtitle: 'Awaiting confirmation',
+                ),
+                AdminCard(
+                  title: 'Total Revenue',
+                  value: NumberFormat.currency(symbol: '\$').format(bookingStats.totalRevenue),
+                  icon: Icons.attach_money,
+                  color: Colors.green,
+                  subtitle: 'Avg: ${NumberFormat.currency(symbol: '\$').format(bookingStats.averageBookingValue)}',
+                ),
+                AdminCard(
+                  title: 'Occupancy Rate',
+                  value: '${bookingStats.occupancyRate.toStringAsFixed(1)}%',
+                  icon: Icons.trending_up,
+                  color: Colors.purple,
+                  subtitle: 'Current month',
+                ),
+              ],
+            ),
           ),
           
           const SizedBox(height: 24),
@@ -280,6 +352,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Text(
                         '${booking.nights} nights',
@@ -287,6 +360,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                           color: Colors.grey.shade600,
                           fontSize: 12,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
@@ -295,30 +369,35 @@ class _BookingsScreenState extends State<BookingsScreen> {
                   child: Text(
                     'User ${booking.userId}',
                     style: const TextStyle(fontSize: 14),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 AdminTableCell(
                   child: Text(
                     booking.hostName,
                     style: const TextStyle(fontSize: 14),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 AdminTableCell(
                   child: Text(
                     DateFormat('MMM dd, yyyy').format(booking.checkInDate),
                     style: const TextStyle(fontSize: 14),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 AdminTableCell(
                   child: Text(
                     DateFormat('MMM dd, yyyy').format(booking.checkOutDate),
                     style: const TextStyle(fontSize: 14),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 AdminTableCell(
                   child: Text(
                     booking.guests.toString(),
                     style: const TextStyle(fontSize: 14),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 AdminTableCell(
@@ -328,6 +407,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 AdminTableCell(

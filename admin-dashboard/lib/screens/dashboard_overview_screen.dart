@@ -3,66 +3,12 @@ import 'package:intl/intl.dart';
 import '../widgets/admin_card.dart';
 import '../widgets/admin_chart.dart';
 import '../widgets/responsive_layout.dart';
-import '../utils/responsive.dart';
 import '../widgets/admin_table.dart';
 import '../models/analytics.dart';
 import '../models/booking.dart';
 
 class DashboardOverviewScreen extends StatelessWidget {
   const DashboardOverviewScreen({super.key});
-
-  Widget _buildChartCard(BuildContext context, String title, List<double> data, Color color) {
-    return Container(
-      padding: Responsive.getResponsiveEdgeInsets(context),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade200,
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: Responsive.getResponsiveValue(
-                context,
-                mobile: 16.0,
-                tablet: 18.0,
-                desktop: 20.0,
-              ),
-              fontWeight: FontWeight.w600,
-              color: Colors.grey.shade800,
-            ),
-          ),
-          SizedBox(height: Responsive.getResponsiveValue(
-            context,
-            mobile: 12.0,
-            tablet: 16.0,
-            desktop: 20.0,
-          )),
-          SizedBox(
-            height: Responsive.getResponsiveValue(
-              context,
-              mobile: 150.0,
-              tablet: 180.0,
-              desktop: 200.0,
-            ),
-            child: AdminChart(
-              data: data,
-              color: color,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -268,26 +214,43 @@ class DashboardOverviewScreen extends StatelessWidget {
           const SizedBox(height: 24),
           
           // Charts Row
-          Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: AdminChart(
+          ResponsiveLayout(
+            mobile: Column(
+              children: [
+                AdminChart(
                   title: 'Revenue Trend',
                   data: revenueData,
                   isRevenue: true,
                 ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                flex: 2,
-                child: AdminChart(
+                const SizedBox(height: 16),
+                AdminChart(
                   title: 'Bookings Trend',
                   data: bookingData,
                   isRevenue: false,
                 ),
-              ),
-            ],
+              ],
+            ),
+            desktop: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: AdminChart(
+                    title: 'Revenue Trend',
+                    data: revenueData,
+                    isRevenue: true,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  flex: 2,
+                  child: AdminChart(
+                    title: 'Bookings Trend',
+                    data: bookingData,
+                    isRevenue: false,
+                  ),
+                ),
+              ],
+            ),
           ),
           
           const SizedBox(height: 24),

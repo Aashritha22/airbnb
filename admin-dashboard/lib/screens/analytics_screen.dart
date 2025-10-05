@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import '../widgets/admin_card.dart';
 import '../widgets/admin_chart.dart';
+import '../widgets/responsive_layout.dart';
 import '../models/analytics.dart';
 
 class AnalyticsScreen extends StatelessWidget {
@@ -109,73 +110,132 @@ class AnalyticsScreen extends StatelessWidget {
           const SizedBox(height: 24),
           
           // Key Metrics
-          GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 4,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 1.8,
-            children: [
-              AdminCard(
-                title: 'Total Revenue',
-                value: NumberFormat.currency(symbol: '\$').format(analytics.totalRevenue),
-                icon: Icons.attach_money,
-                color: Colors.green,
-                subtitle: 'This month: ${NumberFormat.currency(symbol: '\$').format(analytics.monthlyRevenue)}',
-                trend: analytics.revenueGrowth,
-              ),
-              AdminCard(
-                title: 'Total Bookings',
-                value: analytics.totalBookings.toString(),
-                icon: Icons.book_online,
-                color: Colors.blue,
-                subtitle: 'This month: ${analytics.monthlyBookings}',
-                trend: analytics.bookingGrowth,
-              ),
-              AdminCard(
-                title: 'Total Users',
-                value: analytics.totalUsers.toString(),
-                icon: Icons.people,
-                color: Colors.purple,
-                subtitle: 'This month: +${analytics.monthlyUsers}',
-                trend: analytics.userGrowth,
-              ),
-              AdminCard(
-                title: 'Occupancy Rate',
-                value: '${analytics.occupancyRate.toStringAsFixed(1)}%',
-                icon: Icons.trending_up,
-                color: Colors.orange,
-                subtitle: 'Average rating: ${analytics.averageRating}',
-              ),
-            ],
+          ResponsiveLayout(
+            mobile: Column(
+              children: [
+                AdminCard(
+                  title: 'Total Revenue',
+                  value: NumberFormat.currency(symbol: '\$').format(analytics.totalRevenue),
+                  icon: Icons.attach_money,
+                  color: Colors.green,
+                  subtitle: 'This month: ${NumberFormat.currency(symbol: '\$').format(analytics.monthlyRevenue)}',
+                  trend: analytics.revenueGrowth,
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Total Bookings',
+                  value: analytics.totalBookings.toString(),
+                  icon: Icons.book_online,
+                  color: Colors.blue,
+                  subtitle: 'This month: ${analytics.monthlyBookings}',
+                  trend: analytics.bookingGrowth,
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Total Users',
+                  value: analytics.totalUsers.toString(),
+                  icon: Icons.people,
+                  color: Colors.purple,
+                  subtitle: 'This month: +${analytics.monthlyUsers}',
+                  trend: analytics.userGrowth,
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Occupancy Rate',
+                  value: '${analytics.occupancyRate.toStringAsFixed(1)}%',
+                  icon: Icons.trending_up,
+                  color: Colors.orange,
+                  subtitle: 'Average rating: ${analytics.averageRating}',
+                ),
+              ],
+            ),
+            desktop: GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 4,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: 1.8,
+              children: [
+                AdminCard(
+                  title: 'Total Revenue',
+                  value: NumberFormat.currency(symbol: '\$').format(analytics.totalRevenue),
+                  icon: Icons.attach_money,
+                  color: Colors.green,
+                  subtitle: 'This month: ${NumberFormat.currency(symbol: '\$').format(analytics.monthlyRevenue)}',
+                  trend: analytics.revenueGrowth,
+                ),
+                AdminCard(
+                  title: 'Total Bookings',
+                  value: analytics.totalBookings.toString(),
+                  icon: Icons.book_online,
+                  color: Colors.blue,
+                  subtitle: 'This month: ${analytics.monthlyBookings}',
+                  trend: analytics.bookingGrowth,
+                ),
+                AdminCard(
+                  title: 'Total Users',
+                  value: analytics.totalUsers.toString(),
+                  icon: Icons.people,
+                  color: Colors.purple,
+                  subtitle: 'This month: +${analytics.monthlyUsers}',
+                  trend: analytics.userGrowth,
+                ),
+                AdminCard(
+                  title: 'Occupancy Rate',
+                  value: '${analytics.occupancyRate.toStringAsFixed(1)}%',
+                  icon: Icons.trending_up,
+                  color: Colors.orange,
+                  subtitle: 'Average rating: ${analytics.averageRating}',
+                ),
+              ],
+            ),
           ),
           
           const SizedBox(height: 24),
           
           // Charts Row 1
-          Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: AdminChart(
+          ResponsiveLayout(
+            mobile: Column(
+              children: [
+                AdminChart(
                   title: 'Revenue Trend (Last 12 Months)',
                   data: revenueData,
                   isRevenue: true,
                   height: 300,
                 ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                flex: 2,
-                child: AdminChart(
+                const SizedBox(height: 16),
+                AdminChart(
                   title: 'Bookings Trend (Last 12 Months)',
                   data: bookingData,
                   isRevenue: false,
                   height: 300,
                 ),
-              ),
-            ],
+              ],
+            ),
+            desktop: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: AdminChart(
+                    title: 'Revenue Trend (Last 12 Months)',
+                    data: revenueData,
+                    isRevenue: true,
+                    height: 300,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  flex: 2,
+                  child: AdminChart(
+                    title: 'Bookings Trend (Last 12 Months)',
+                    data: bookingData,
+                    isRevenue: false,
+                    height: 300,
+                  ),
+                ),
+              ],
+            ),
           ),
           
           const SizedBox(height: 24),
@@ -191,16 +251,25 @@ class AnalyticsScreen extends StatelessWidget {
           const SizedBox(height: 24),
           
           // Category Distribution and Top Locations
-          Row(
-            children: [
-              Expanded(
-                child: _buildCategoryDistribution(categoryData),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: _buildTopLocations(topLocations),
-              ),
-            ],
+          ResponsiveLayout(
+            mobile: Column(
+              children: [
+                _buildCategoryDistribution(categoryData),
+                const SizedBox(height: 16),
+                _buildTopLocations(topLocations),
+              ],
+            ),
+            desktop: Row(
+              children: [
+                Expanded(
+                  child: _buildCategoryDistribution(categoryData),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: _buildTopLocations(topLocations),
+                ),
+              ],
+            ),
           ),
         ],
       ),

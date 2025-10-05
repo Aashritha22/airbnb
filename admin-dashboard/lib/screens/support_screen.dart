@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import '../models/support_ticket.dart';
 import '../widgets/admin_card.dart';
 import '../widgets/admin_table.dart';
+import '../widgets/responsive_layout.dart';
+import '../utils/responsive.dart';
 
 class SupportScreen extends StatefulWidget {
   const SupportScreen({super.key});
@@ -140,43 +142,80 @@ class _SupportScreenState extends State<SupportScreen> {
           const SizedBox(height: 24),
           
           // Stats Cards
-          GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 4,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 1.8,
-            children: [
-              AdminCard(
-                title: 'Total Tickets',
-                value: _supportStats.totalTickets.toString(),
-                icon: Icons.support_agent,
-                color: Colors.blue,
-                subtitle: '${_supportStats.urgentTickets} urgent tickets',
-              ),
-              AdminCard(
-                title: 'Open Tickets',
-                value: _supportStats.openTickets.toString(),
-                icon: Icons.assignment,
-                color: Colors.red,
-                subtitle: 'Require attention',
-              ),
-              AdminCard(
-                title: 'In Progress',
-                value: _supportStats.inProgressTickets.toString(),
-                icon: Icons.work,
-                color: Colors.orange,
-                subtitle: 'Being worked on',
-              ),
-              AdminCard(
-                title: 'Avg Resolution',
-                value: '${_supportStats.averageResolutionTime.toStringAsFixed(1)}h',
-                icon: Icons.timer,
-                color: Colors.green,
-                subtitle: 'Response time',
-              ),
-            ],
+          ResponsiveLayout(
+            mobile: Column(
+              children: [
+                AdminCard(
+                  title: 'Total Tickets',
+                  value: _supportStats.totalTickets.toString(),
+                  icon: Icons.support_agent,
+                  color: Colors.blue,
+                  subtitle: '${_supportStats.urgentTickets} urgent tickets',
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Open Tickets',
+                  value: _supportStats.openTickets.toString(),
+                  icon: Icons.assignment,
+                  color: Colors.red,
+                  subtitle: 'Require attention',
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'In Progress',
+                  value: _supportStats.inProgressTickets.toString(),
+                  icon: Icons.work,
+                  color: Colors.orange,
+                  subtitle: 'Being worked on',
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Avg Resolution',
+                  value: '${_supportStats.averageResolutionTime.toStringAsFixed(1)}h',
+                  icon: Icons.timer,
+                  color: Colors.green,
+                  subtitle: 'Response time',
+                ),
+              ],
+            ),
+            desktop: GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 4,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: 1.8,
+              children: [
+                AdminCard(
+                  title: 'Total Tickets',
+                  value: _supportStats.totalTickets.toString(),
+                  icon: Icons.support_agent,
+                  color: Colors.blue,
+                  subtitle: '${_supportStats.urgentTickets} urgent tickets',
+                ),
+                AdminCard(
+                  title: 'Open Tickets',
+                  value: _supportStats.openTickets.toString(),
+                  icon: Icons.assignment,
+                  color: Colors.red,
+                  subtitle: 'Require attention',
+                ),
+                AdminCard(
+                  title: 'In Progress',
+                  value: _supportStats.inProgressTickets.toString(),
+                  icon: Icons.work,
+                  color: Colors.orange,
+                  subtitle: 'Being worked on',
+                ),
+                AdminCard(
+                  title: 'Avg Resolution',
+                  value: '${_supportStats.averageResolutionTime.toStringAsFixed(1)}h',
+                  icon: Icons.timer,
+                  color: Colors.green,
+                  subtitle: 'Response time',
+                ),
+              ],
+            ),
           ),
           
           const SizedBox(height: 24),
@@ -363,38 +402,49 @@ class _SupportScreenState extends State<SupportScreen> {
             ],
             rows: _filteredTickets.map((SupportTicket ticket) {
               return [
-                Text(
-                  ticket.id,
-                  style: const TextStyle(
-                    fontFamily: 'monospace',
-                    fontWeight: FontWeight.w600,
+                Expanded(
+                  child: Text(
+                    ticket.id,
+                    style: const TextStyle(
+                      fontFamily: 'monospace',
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                SizedBox(
-                  width: 200,
+                Expanded(
                   child: Text(
                     ticket.subject,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      ticket.userName,
-                      style: const TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      ticket.userEmail,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade600,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        ticket.userName,
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                  ],
+                      Text(
+                        ticket.userEmail,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
                 ),
-                Text(ticket.categoryText),
+                Expanded(
+                  child: Text(
+                    ticket.categoryText,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
@@ -470,7 +520,12 @@ class _SupportScreenState extends State<SupportScreen> {
       builder: (context) => AlertDialog(
         title: Text('Ticket Details - ${ticket.id}'),
         content: SizedBox(
-          width: 500,
+          width: Responsive.getResponsiveValue(
+            context,
+            mobile: 300.0,
+            tablet: 400.0,
+            desktop: 500.0,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -571,7 +626,12 @@ class _SupportScreenState extends State<SupportScreen> {
       builder: (context) => AlertDialog(
         title: Text('Reply to Ticket ${ticket.id}'),
         content: SizedBox(
-          width: 500,
+          width: Responsive.getResponsiveValue(
+            context,
+            mobile: 300.0,
+            tablet: 400.0,
+            desktop: 500.0,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

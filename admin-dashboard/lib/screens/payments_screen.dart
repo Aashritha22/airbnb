@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import '../models/payment.dart';
 import '../widgets/admin_card.dart';
 import '../widgets/admin_table.dart';
+import '../widgets/responsive_layout.dart';
 
 class PaymentsScreen extends StatefulWidget {
   const PaymentsScreen({super.key});
@@ -115,43 +116,80 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
           const SizedBox(height: 24),
           
           // Stats Cards
-          GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 4,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 1.8,
-            children: [
-              AdminCard(
-                title: 'Total Payments',
-                value: _paymentStats.totalPayments.toString(),
-                icon: Icons.payment,
-                color: Colors.blue,
-                subtitle: 'Total amount: \$${_paymentStats.totalAmount.toStringAsFixed(2)}',
-              ),
-              AdminCard(
-                title: 'Completed',
-                value: _paymentStats.completedPayments.toString(),
-                icon: Icons.check_circle,
-                color: Colors.green,
-                subtitle: '${((_paymentStats.completedPayments / _paymentStats.totalPayments) * 100).toStringAsFixed(1)}% success rate',
-              ),
-              AdminCard(
-                title: 'Pending',
-                value: _paymentStats.pendingPayments.toString(),
-                icon: Icons.schedule,
-                color: Colors.orange,
-                subtitle: 'Awaiting processing',
-              ),
-              AdminCard(
-                title: 'Monthly Revenue',
-                value: '\$${_paymentStats.monthlyRevenue.toStringAsFixed(2)}',
-                icon: Icons.trending_up,
-                color: Colors.purple,
-                subtitle: 'This month',
-              ),
-            ],
+          ResponsiveLayout(
+            mobile: Column(
+              children: [
+                AdminCard(
+                  title: 'Total Payments',
+                  value: _paymentStats.totalPayments.toString(),
+                  icon: Icons.payment,
+                  color: Colors.blue,
+                  subtitle: 'Total amount: \$${_paymentStats.totalAmount.toStringAsFixed(2)}',
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Completed',
+                  value: _paymentStats.completedPayments.toString(),
+                  icon: Icons.check_circle,
+                  color: Colors.green,
+                  subtitle: '${((_paymentStats.completedPayments / _paymentStats.totalPayments) * 100).toStringAsFixed(1)}% success rate',
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Pending',
+                  value: _paymentStats.pendingPayments.toString(),
+                  icon: Icons.schedule,
+                  color: Colors.orange,
+                  subtitle: 'Awaiting processing',
+                ),
+                const SizedBox(height: 16),
+                AdminCard(
+                  title: 'Monthly Revenue',
+                  value: '\$${_paymentStats.monthlyRevenue.toStringAsFixed(2)}',
+                  icon: Icons.trending_up,
+                  color: Colors.purple,
+                  subtitle: 'This month',
+                ),
+              ],
+            ),
+            desktop: GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 4,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: 1.8,
+              children: [
+                AdminCard(
+                  title: 'Total Payments',
+                  value: _paymentStats.totalPayments.toString(),
+                  icon: Icons.payment,
+                  color: Colors.blue,
+                  subtitle: 'Total amount: \$${_paymentStats.totalAmount.toStringAsFixed(2)}',
+                ),
+                AdminCard(
+                  title: 'Completed',
+                  value: _paymentStats.completedPayments.toString(),
+                  icon: Icons.check_circle,
+                  color: Colors.green,
+                  subtitle: '${((_paymentStats.completedPayments / _paymentStats.totalPayments) * 100).toStringAsFixed(1)}% success rate',
+                ),
+                AdminCard(
+                  title: 'Pending',
+                  value: _paymentStats.pendingPayments.toString(),
+                  icon: Icons.schedule,
+                  color: Colors.orange,
+                  subtitle: 'Awaiting processing',
+                ),
+                AdminCard(
+                  title: 'Monthly Revenue',
+                  value: '\$${_paymentStats.monthlyRevenue.toStringAsFixed(2)}',
+                  icon: Icons.trending_up,
+                  color: Colors.purple,
+                  subtitle: 'This month',
+                ),
+              ],
+            ),
           ),
           
           const SizedBox(height: 24),
@@ -321,22 +359,38 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
             ],
             rows: _filteredPayments.map((Payment payment) {
               return [
-                Text(payment.id),
-                Text(
-                  payment.transactionId,
-                  style: TextStyle(
-                    fontFamily: 'monospace',
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
+                Expanded(
+                  child: Text(
+                    payment.id,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Text(
-                  '\$${payment.amount.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
+                Expanded(
+                  child: Text(
+                    payment.transactionId,
+                    style: TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 12,
+                      color: Colors.grey.shade600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Text(payment.methodText),
+                Expanded(
+                  child: Text(
+                    '\$${payment.amount.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    payment.methodText,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(

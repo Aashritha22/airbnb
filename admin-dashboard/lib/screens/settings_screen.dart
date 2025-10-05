@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/theme_provider.dart';
 import '../utils/responsive.dart';
-import '../widgets/responsive_layout.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -416,7 +415,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Profile Settings'),
         content: SizedBox(
-          width: 500,
+          width: Responsive.getResponsiveValue(
+            context,
+            mobile: 300.0,
+            tablet: 400.0,
+            desktop: 500.0,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -498,7 +502,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Security Settings'),
         content: SizedBox(
-          width: 500,
+          width: Responsive.getResponsiveValue(
+            context,
+            mobile: 300.0,
+            tablet: 400.0,
+            desktop: 500.0,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -618,7 +627,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         builder: (context, setState) => AlertDialog(
           title: const Text('Privacy Settings'),
           content: SizedBox(
-            width: 500,
+            width: Responsive.getResponsiveValue(
+              context,
+              mobile: 300.0,
+              tablet: 400.0,
+              desktop: 500.0,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -727,7 +741,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Database Management'),
         content: SizedBox(
-          width: 500,
+          width: Responsive.getResponsiveValue(
+            context,
+            mobile: 300.0,
+            tablet: 400.0,
+            desktop: 500.0,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -857,8 +876,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (context) => AlertDialog(
         title: const Text('System Logs'),
         content: SizedBox(
-          width: 600,
-          height: 400,
+          width: Responsive.getResponsiveValue(
+            context,
+            mobile: 300.0,
+            tablet: 500.0,
+            desktop: 600.0,
+          ),
+          height: Responsive.getResponsiveValue(
+            context,
+            mobile: 300.0,
+            tablet: 350.0,
+            desktop: 400.0,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -992,8 +1021,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Terms of Service'),
         content: SizedBox(
-          width: 600,
-          height: 400,
+          width: Responsive.getResponsiveValue(
+            context,
+            mobile: 300.0,
+            tablet: 500.0,
+            desktop: 600.0,
+          ),
+          height: Responsive.getResponsiveValue(
+            context,
+            mobile: 300.0,
+            tablet: 350.0,
+            desktop: 400.0,
+          ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1067,8 +1106,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Privacy Policy'),
         content: SizedBox(
-          width: 600,
-          height: 400,
+          width: Responsive.getResponsiveValue(
+            context,
+            mobile: 300.0,
+            tablet: 500.0,
+            desktop: 600.0,
+          ),
+          height: Responsive.getResponsiveValue(
+            context,
+            mobile: 300.0,
+            tablet: 350.0,
+            desktop: 400.0,
+          ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1142,7 +1191,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Contact Support'),
         content: SizedBox(
-          width: 500,
+          width: Responsive.getResponsiveValue(
+            context,
+            mobile: 300.0,
+            tablet: 400.0,
+            desktop: 500.0,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
