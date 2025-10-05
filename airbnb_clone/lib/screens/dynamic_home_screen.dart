@@ -122,13 +122,11 @@ class _DynamicHomeScreenState extends State<DynamicHomeScreen> {
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
-                    child: SearchSegment(
-                      onSearch: (query) {
-                        propertyProvider.setSearchQuery(query);
-                        propertyProvider.refresh();
-                      },
-                      onFilter: () => _showFilterDialog(context),
-                    ),
+                  child: SearchSegment(
+                    label: 'Where to?',
+                    hint: 'Search destinations',
+                    onTap: () => _showSearchDialog(context),
+                  ),
                   ),
                 ),
 
@@ -221,16 +219,6 @@ class _DynamicHomeScreenState extends State<DynamicHomeScreen> {
                               padding: const EdgeInsets.only(bottom: 16),
                               child: PropertyCard(
                                 property: _convertToLegacyProperty(property),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => PropertyDetailsScreen(
-                                        property: property,
-                                      ),
-                                    ),
-                                  );
-                                },
                               ),
                             );
                           }
@@ -273,27 +261,42 @@ class _DynamicHomeScreenState extends State<DynamicHomeScreen> {
           },
         ),
       ),
-      bottomNavigationBar: const NavTab(),
+      bottomNavigationBar: const NavTab(
+        label: 'Explore',
+        isSelected: true,
+        onTap: null,
+      ),
+    );
+  }
+
+  void _showSearchDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Search Properties'),
+        content: const Text('Search functionality will be implemented here'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
     );
   }
 
   void _showFilterDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => FilterDialog(
-        onApplyFilters: (filters) {
-          final propertyProvider = Provider.of<PropertyProvider>(context, listen: false);
-          
-          propertyProvider.setPriceRange(
-            filters.priceRange.start > 0 ? filters.priceRange.start : null,
-            filters.priceRange.end < 1000 ? filters.priceRange.end : null,
-          );
-          
-          propertyProvider.setGuests(filters.guestCount > 1 ? filters.guestCount : null);
-          propertyProvider.setAmenities(filters.amenities);
-          
-          propertyProvider.refresh();
-        },
+      builder: (context) => AlertDialog(
+        title: const Text('Filter Properties'),
+        content: const Text('Filter functionality will be implemented here'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
       ),
     );
   }
